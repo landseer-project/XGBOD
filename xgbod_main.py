@@ -58,4 +58,4 @@ if __name__ == "__main__":
     print("\nOn Training Data:")
     evaluate_print(clf_name, y_train, y_train_scores)
     print("\nOn Test Data:")
-    evaluate_print(clf_name, y_test, y_test_scores)
+    evaluate_print(clf_name, y_test, y_test_scores, y_test_pred)
