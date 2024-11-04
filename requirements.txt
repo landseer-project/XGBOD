@@ -6,3 +6,4 @@ PyNomaly>=0.1.7
 scikit_learn>=0.19.1
 scipy>=0.19.1
 xgboost>=0.7
+pyod

@@ -1,40 +1,40 @@
 services:
   demo:
-    image: xgboddemo
+    image: xgboddemo1
     build:
       dockerfile: Dockerfile-demo
     runtime: nvidia
     shm_size: 1g
-    deploy:
-      resources:
-        limit:
-          memory: 4G
-        reservations:
-          memory: 2G
-          devices:
-            - driver: nvidia
-              device_ids: ['0']
-              capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     limit:
+    #       memory: 4G
+    #     reservations:
+    #       memory: 2G
+    #       devices:
+    #         - driver: nvidia
+    #           device_ids: ['0']
+    #           capabilities: [gpu]
     command: python /home/Dockerfile-demo/xgbod_demo.py
     volumes:
       - ./xgbod_demo.py:/home/Dockerfile-demo/xgbod_demo.py
 
   main:
-    image: xgbodmain
+    image: xgbodmain1
     build:
-      dockerfile: Dockerfile-main.dockerfile
+      dockerfile: Dockerfile-main
     runtime: nvidia
     shm_size: 1g
-    deploy:
-      resources:
-        limit:
-          memory: 4G
-        reservations:
-          memory: 2G
-          devices:
-            - driver: nvidia
-              device_ids: ['0']
-              capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     limit:
+    #       memory: 4G
+    #     reservations:
+    #       memory: 2G
+    #       devices:
+    #         - driver: nvidia
+    #           device_ids: ['0']
+    #           capabilities: [gpu]
     command: python /home/Dockerfile-main/xgbod_main.py
     volumes:
       - ./xgbod_main.py:/home/Dockerfile-main/xgbod_main.py
