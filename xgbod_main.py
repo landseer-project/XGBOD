@@ -9,6 +9,7 @@ from __future__ import print_function
 
 import os
 import sys
+import numpy as np
 
 from sklearn.model_selection import train_test_split
 from sklearn.utils.validation import check_X_y
@@ -23,7 +24,7 @@ if __name__ == "__main__":
     # Generate some data if the source data is missing
     mat_file = 'cardio.mat'
     try:
-        mat = loadmat(os.path.join('data', mat_file))
+        mat = loadmat(os.path.join('datasets/', mat_file))
 
     except TypeError:
         print('{data_file} does not exist. Use generated data'.format(
@@ -41,7 +42,24 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4,
                                                         random_state=42)
 
-    # train XGBOD detector
+    print("X_test:", X_test.shape)
+    print("y_test:", y_test.shape)
+    """
+    train_data_batches, train_data_labels = [], []
+    for batch in range(1, 6):
+        data_dict = loadmat('datasets/cifar-10-batches-mat/data_batch_{}.mat'.format(batch))
+        train_data_batches.append(data_dict['data'])
+        train_data_labels.append(data_dict['labels'].flatten())
+    train_set = {'images': np.concatenate(train_data_batches, axis=0),
+                'labels': np.concatenate(train_data_labels, axis=0)}
+    data_dict = loadmat('datasets/cifar-10-batches-mat/test_batch.mat')
+    test_set = {'images': data_dict['data'],
+                'labels': data_dict['labels'].flatten()}
+    X_train = train_set['images']
+    y_train = train_set['labels']
+    X_test = test_set['images']
+    y_test = test_set['labels']
+    """
     clf_name = 'XGBOD'
     clf = XGBOD(random_state=42)
     clf.fit(X_train, y_train)
@@ -60,3 +78,4 @@ if __name__ == "__main__":
     print("\nOn Test Data:")
     evaluate_print(clf_name, y_test, y_test_scores)
     print('Test Data labels\n', y_test_pred)
+    print(len(y_test_pred))
